@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fraunces", "Times New Roman", serif;
+  --font-sans: "Source Sans 3", "Segoe UI", sans-serif;
+  --color-navy: #12243d;
+  --color-navy-2: #1c3458;
+  --color-ivory: #f4efe4;
+  --color-paper: #fffcf6;
+  --color-ink: #243044;
+  --color-muted: #5d6b7c;
+  --color-line: #d9ccb6;
+  --color-accent: #255ea8;
+  --color-gold: #a57c3b;
+  --color-good: #2f6d4f;
+  --color-warn: #9a4b2f;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--color-ink);
+  background:
+    radial-gradient(1200px 500px at 10% -10%, rgba(165, 124, 59, 0.08), transparent 50%),
+    radial-gradient(900px 400px at 100% 0%, rgba(37, 94, 168, 0.07), transparent 45%),
+    var(--color-ivory);
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.paper {
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+  box-shadow: 0 12px 40px rgba(18, 36, 61, 0.06);
+}
+
+.hairline {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+}

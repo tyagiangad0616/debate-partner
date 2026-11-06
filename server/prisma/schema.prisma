@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String          @id @default(uuid())
+  displayName  String
+  email        String          @unique
+  passwordHash String
+  ttsEnabled   Boolean         @default(false)
+  createdAt    DateTime        @default(now())
+  sessions     DebateSession[]
+}
+
+model DebateSession {
+  id              String           @id @default(uuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topic           String
+  userPosition    String
+  mode            String
+  status          String           @default("active")
+  startedAt       DateTime?
+  endedAt         DateTime?
+  durationSeconds Int
+  floorIndex      Int              @default(-1)
+  floorPhase      String           @default("briefing")
+  floorStartedAt  DateTime?
+  extensionUsed   Boolean          @default(false)
+  rubricVersion   String           @default("v1")
+  createdAt       DateTime         @default(now())
+  messages        DebateMessage[]
+  analysis        DebateAnalysis?
+
+  @@index([userId, startedAt])
+}
+
+model DebateMessage {
+  id                      String        @id @default(uuid())
+  sessionId               String
+  session                 DebateSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  speaker                 String
+  content                 String
+  turnNumber              Int
+  speakingDurationSeconds Float?
+  createdAt               DateTime      @default(now())
+
+  @@index([sessionId, turnNumber])
+}
+
+model DebateAnalysis {
+  id              String        @id @default(uuid())
+  sessionId       String        @unique
+  session         DebateSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  overallScore    Float
+  categoryScores  Json
+  strengths       Json
+  weaknesses      Json
+  fallacies       Json
+  recommendations Json
+  speechMetrics   Json
+  createdAt       DateTime      @default(now())
+}

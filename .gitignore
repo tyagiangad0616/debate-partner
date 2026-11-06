@@ -1,0 +1,17 @@
+node_modules/
+dist/
+build/
+.env
+.env.local
+*.db
+*.db-journal
+.DS_Store
+coverage/
+.vite/
+*.log
+client/test-results/
+playwright-report/
+server/prisma/dev.db
+server/prisma/test.db
+.idea/
+.vscode/
